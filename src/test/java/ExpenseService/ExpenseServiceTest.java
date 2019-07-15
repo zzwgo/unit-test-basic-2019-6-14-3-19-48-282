@@ -4,6 +4,7 @@ import ExpenseService.Exception.UnexpectedProjectTypeException;
 import ExpenseService.Expense.ExpenseType;
 import ExpenseService.Project.Project;
 import ExpenseService.Project.ProjectType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static ExpenseService.ExpenseService.getExpenseCodeByProjectTypeAndName;
@@ -54,7 +55,10 @@ class ExpenseServiceTest {
     @Test
     void should_throw_unexpected_project_exception_if_project_is_invalid() {
         // given
+        Project project = new Project(ProjectType.UNEXPECTED_PROJECT_TYPE,"name");
         // when
+        Throwable exception1= Assertions.assertThrows(UnexpectedProjectTypeException.class,() -> getExpenseCodeByProjectTypeAndName(project));
         // then
+        assertEquals("You enter invalid project type",exception1.getMessage());
     }
 }
